@@ -39,8 +39,9 @@ export default function MemoryGame() {
   const [matched, setMatched] = useState([])
   const [score, setScore] = useState(0)
   const [moves, setMoves] = useState(0)
+  const [gameStarted, setGameStarted] = useState(false)
   const [gameOver, setGameOver] = useState(false)
-  const [message, setMessage] = useState('')
+  const [message, setMessage] = useState('Pulsa empezar para iniciar la mision')
   const [isChecking, setIsChecking] = useState(false)
   const [imageErrors, setImageErrors] = useState({})
 
@@ -56,8 +57,6 @@ export default function MemoryGame() {
     } catch {
       audioContextRef.current = null
     }
-
-    startGame()
 
     return () => {
       if (audioContextRef.current) {
@@ -123,6 +122,7 @@ export default function MemoryGame() {
     setMatched([])
     setScore(0)
     setMoves(0)
+    setGameStarted(true)
     setGameOver(false)
     setMessage('Encuentra las parejas de avatares')
     setImageErrors({})
@@ -130,7 +130,7 @@ export default function MemoryGame() {
   }
 
   async function handleCardClick(index) {
-    if (isChecking || flipped.includes(index) || matched.includes(index) || gameOver) return
+    if (!gameStarted || isChecking || flipped.includes(index) || matched.includes(index) || gameOver) return
 
     startAmbient()
     playSound('flip')
@@ -244,44 +244,52 @@ export default function MemoryGame() {
         </motion.div>
       )}
 
-      <div className={styles.memoryBoard}>
-        {cards.map((card, index) => {
-          const isFlipped = flipped.includes(index)
-          const isMatched = matched.includes(index)
-          const showContent = isFlipped || isMatched
+      {!gameStarted && (
+        <div className={styles.startWrapper}>
+          <button className="start-btn" onClick={startGame}>Empezar</button>
+        </div>
+      )}
 
-          return (
-            <motion.div
-              key={card.id}
-              className={`${styles.memoryCard} ${isMatched ? styles.matched : ''}`}
-              onClick={() => handleCardClick(index)}
-              initial={false}
-              animate={{ scale: isFlipped && !isMatched ? [1, 1.03, 1] : 1 }}
-              transition={{ duration: 0.2 }}
-            >
-              {showContent ? (
-                <div className={`${styles.cardFace} ${styles.front}`}>
-                  {!imageErrors[card.id] ? (
-                    <img
-                      className={styles.avatarImg}
-                      src={card.imageUrl}
-                      alt={card.name}
-                      loading="eager"
-                      onError={() => handleAvatarError(card.id, card.name)}
-                    />
-                  ) : (
-                    <div className={styles.avatarFallback}>{AVATAR_EMOJIS[card.name] || 'N/A'}</div>
-                  )}
-                </div>
-              ) : (
-                <div className={`${styles.cardFace} ${styles.back}`}>
-                  <span className={styles.cardBackIcon}>?</span>
-                </div>
-              )}
-            </motion.div>
-          )
-        })}
-      </div>
+      {gameStarted && (
+        <div className={styles.memoryBoard}>
+          {cards.map((card, index) => {
+            const isFlipped = flipped.includes(index)
+            const isMatched = matched.includes(index)
+            const showContent = isFlipped || isMatched
+
+            return (
+              <motion.div
+                key={card.id}
+                className={`${styles.memoryCard} ${isMatched ? styles.matched : ''}`}
+                onClick={() => handleCardClick(index)}
+                initial={false}
+                animate={{ scale: isFlipped && !isMatched ? [1, 1.03, 1] : 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {showContent ? (
+                  <div className={`${styles.cardFace} ${styles.front}`}>
+                    {!imageErrors[card.id] ? (
+                      <img
+                        className={styles.avatarImg}
+                        src={card.imageUrl}
+                        alt={card.name}
+                        loading="eager"
+                        onError={() => handleAvatarError(card.id, card.name)}
+                      />
+                    ) : (
+                      <div className={styles.avatarFallback}>{AVATAR_EMOJIS[card.name] || 'N/A'}</div>
+                    )}
+                  </div>
+                ) : (
+                  <div className={`${styles.cardFace} ${styles.back}`}>
+                    <span className={styles.cardBackIcon}>?</span>
+                  </div>
+                )}
+              </motion.div>
+            )
+          })}
+        </div>
+      )}
 
       <AnimatePresence>
         {gameOver && (
