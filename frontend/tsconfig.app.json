@@ -5,7 +5,7 @@
     "useDefineForClassFields": true,
     "lib": ["ES2023", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom", "react", "react-dom"],
     "skipLibCheck": true,
 
     /* Bundler mode */
@@ -26,5 +26,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["src/tests", "src/test", "src/**/*.test.ts", "src/**/*.test.tsx"]
 }
