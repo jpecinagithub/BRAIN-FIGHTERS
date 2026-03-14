@@ -67,7 +67,7 @@ function createQuestion() {
 function PatternGrid({ pattern, size = SIZE }) {
   const filled = new Set(pattern)
   return (
-    <div className="mini-grid" style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
+    <div className="mini-grid rotation-grid" style={{ gridTemplateColumns: `repeat(${size}, 1fr)` }}>
       {Array.from({ length: size * size }).map((_, index) => (
         <div key={index} className={`mini-cell ${filled.has(index) ? 'filled' : ''}`} />
       ))}

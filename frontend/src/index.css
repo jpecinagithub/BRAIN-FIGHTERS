@@ -698,6 +698,15 @@
     @apply border-neon bg-neon/30 shadow-neon;
   }
 
+  .rotation-grid {
+    gap: 0.35rem;
+  }
+
+  .rotation-grid .mini-cell {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
   .rotation-prompt {
     @apply mt-4 grid gap-2 text-center;
   }

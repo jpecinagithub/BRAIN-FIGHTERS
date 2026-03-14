@@ -29,6 +29,10 @@ export default function MatchConfigPage() {
   const [playerName, setPlayerName] = useState("")
   const [teamName, setTeamName] = useState("")
 
+  function stripAccents(value: string) {
+    return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+  }
+
   async function loadMatch() {
     setLoading(true)
     setError(null)
@@ -165,7 +169,7 @@ export default function MatchConfigPage() {
             {match.matchGames.map((mg) => (
               <li key={mg.id} className="game-row">
                 <div>
-                  <strong>{mg.game.name}</strong>
+                  <strong>{stripAccents(mg.game.name)}</strong>
                 </div>
                 <label className="toggle">
                   <input
