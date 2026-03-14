@@ -19,7 +19,14 @@ export function requireAuth(req: AuthRequest, res: Response, next: NextFunction)
   }
 
   try {
-    const payload = jwt.verify(token, config.jwtAccessSecret) as { sub: number; email: string }
+    const payload = jwt.verify(token, config.jwtAccessSecret) as jwt.JwtPayload & {
+      sub?: string | number
+      email?: string
+    }
+    if (!payload || typeof payload !== "object" || !payload.sub || !payload.email) {
+      res.status(401).json({ error: "Invalid or expired access token" })
+      return
+    }
     req.admin = { id: Number(payload.sub), email: payload.email }
     next()
   } catch {

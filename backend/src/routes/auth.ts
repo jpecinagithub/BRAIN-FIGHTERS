@@ -114,12 +114,19 @@ router.post("/refresh", async (req, res) => {
   }
 
   try {
-    const payload = jwt.verify(token, config.jwtRefreshSecret) as { sub: number; tid: string }
+    const payload = jwt.verify(token, config.jwtRefreshSecret) as jwt.JwtPayload & {
+      sub?: string | number
+      tid?: string
+    }
+    if (!payload || typeof payload !== "object" || !payload.sub || !payload.tid) {
+      res.status(401).json({ error: "Refresh token inválido" })
+      return
+    }
     const tokenHash = hashToken(token)
 
     const sessions = await query<any[]>(
       "SELECT id, expires_at FROM sessions WHERE admin_id = ? AND token_hash = ? LIMIT 1",
-      [payload.sub, tokenHash]
+      [Number(payload.sub), tokenHash]
     )
     const session = sessions[0]
     if (!session || new Date(session.expires_at) < new Date()) {
