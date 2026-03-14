@@ -1,0 +1,118 @@
+.puzzleGame {
+  @apply text-center;
+}
+
+.scoreDisplay {
+  @apply mt-4 text-xs uppercase tracking-[0.3em] text-neon;
+}
+
+.uploadSection {
+  @apply mx-auto mt-8 flex max-w-md flex-col items-center gap-3 rounded-xl border border-armor/70 bg-bunker/80 p-6 shadow-panel;
+}
+
+.fileInput {
+  @apply w-full cursor-pointer rounded-md border border-armor/70 bg-obsidian/70 px-3 py-2 text-xs uppercase tracking-[0.2em] text-slate-200;
+}
+
+.fileInput::file-selector-button {
+  margin-right: 12px;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  background: linear-gradient(135deg, #f5c451, #f29e3d);
+  color: #0b0f0c;
+  font-family: 'Teko', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.fileInput:hover {
+  border-color: rgba(125, 255, 176, 0.6);
+  box-shadow: 0 0 18px rgba(125, 255, 176, 0.2);
+}
+
+.puzzleLayout {
+  --puzzle-size: 320px;
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.puzzlePreviewContainer {
+  text-align: center;
+}
+
+.previewLabel {
+  @apply mt-2 text-xs uppercase tracking-[0.3em] text-slate-300/70;
+}
+
+.puzzlePreview {
+  width: var(--puzzle-size);
+  height: var(--puzzle-size);
+  border: 2px solid rgba(125, 255, 176, 0.4);
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(125, 255, 176, 0.2);
+}
+
+.puzzleBoard {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  width: var(--puzzle-size);
+  height: var(--puzzle-size);
+  gap: 2px;
+  border-radius: 8px;
+  background: rgba(12, 18, 14, 0.9);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.puzzlePiece {
+  aspect-ratio: 1 / 1;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.puzzlePiece.selected {
+  border: 2px solid #f5c451;
+  box-shadow: 0 0 14px rgba(245, 196, 81, 0.5);
+}
+
+.puzzleLoading {
+  grid-column: 1 / span 5;
+  align-self: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 700px) {
+  .puzzleLayout {
+    --puzzle-size: min(82vw, 280px);
+    gap: 20px;
+  }
+
+  .uploadSection {
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 420px) {
+  .puzzleLayout {
+    --puzzle-size: min(90vw, 240px);
+    gap: 16px;
+  }
+
+  .uploadSection {
+    max-width: 92vw;
+    padding: 14px;
+  }
+
+  .fileInput {
+    font-size: 0.75rem;
+  }
+}
