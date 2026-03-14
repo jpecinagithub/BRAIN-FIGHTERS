@@ -57,7 +57,7 @@ describe('MatchConfigPage', () => {
     expect(await screen.findByText(/configurar partida #1/i)).toBeInTheDocument()
     expect(screen.getByText('Equipo Alpha')).toBeInTheDocument()
 
-    const teamCard = screen.getByText('Equipos').closest('.config-card')
+    const teamCard = screen.getByText('Equipos').closest('.config-card') as HTMLElement | null
     if (!teamCard) throw new Error('No se encontró el bloque de equipos')
     await user.type(within(teamCard).getByPlaceholderText(/nombre del equipo/i), 'Equipo Beta')
     await user.click(within(teamCard).getByRole('button', { name: /añadir/i }))
@@ -123,7 +123,7 @@ describe('MatchConfigPage', () => {
 
     await screen.findByText(/configurar partida #3/i)
 
-    const playerCard = screen.getByText('Jugadores').closest('.config-card')
+    const playerCard = screen.getByText('Jugadores').closest('.config-card') as HTMLElement | null
     if (!playerCard) throw new Error('No se encontró el bloque de jugadores')
     await user.type(within(playerCard).getByPlaceholderText(/nombre del jugador/i), 'Carla')
     await user.click(within(playerCard).getByRole('button', { name: /añadir/i }))
