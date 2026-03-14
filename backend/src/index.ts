@@ -50,12 +50,7 @@ app.use("/api/auth", authRoutes)
 app.use("/api/matches", matchRoutes)
 app.use("/api", publicRoutes)
 
-app.get("*", (req, res) => {
-  if (req.path.startsWith("/api")) {
-    res.status(404).json({ error: "Not Found" })
-    return
-  }
-
+app.get(/^(?!\/api).*/, (req, res) => {
   const indexPath = path.join(frontendDir, "index.html")
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath)

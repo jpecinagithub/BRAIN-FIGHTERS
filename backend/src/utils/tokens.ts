@@ -13,14 +13,16 @@ export interface RefreshTokenPayload {
 }
 
 export function signAccessToken(payload: AccessTokenPayload) {
-  return jwt.sign(payload, config.jwtAccessSecret as jwt.Secret, { expiresIn: config.accessTokenTtl })
+  return jwt.sign(payload, config.jwtAccessSecret as jwt.Secret, {
+    expiresIn: config.accessTokenTtl as jwt.SignOptions["expiresIn"]
+  })
 }
 
 export function signRefreshToken(adminId: number) {
   const tokenId = crypto.randomBytes(16).toString("hex")
   const expiresAt = new Date(Date.now() + config.refreshTokenTtlDays * 24 * 60 * 60 * 1000)
   const token = jwt.sign({ sub: adminId, tid: tokenId }, config.jwtRefreshSecret as jwt.Secret, {
-    expiresIn: `${config.refreshTokenTtlDays}d`
+    expiresIn: `${config.refreshTokenTtlDays}d` as jwt.SignOptions["expiresIn"]
   })
 
   return { token, tokenId, expiresAt }

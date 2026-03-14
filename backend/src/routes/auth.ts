@@ -123,10 +123,15 @@ router.post("/refresh", async (req, res) => {
       return
     }
     const tokenHash = hashToken(token)
+    const adminId = typeof payload.sub === "string" ? Number(payload.sub) : payload.sub
+    if (!adminId || Number.isNaN(adminId)) {
+      res.status(401).json({ error: "Refresh token inválido" })
+      return
+    }
 
     const sessions = await query<any[]>(
       "SELECT id, expires_at FROM sessions WHERE admin_id = ? AND token_hash = ? LIMIT 1",
-      [Number(payload.sub), tokenHash]
+      [adminId, tokenHash]
     )
     const session = sessions[0]
     if (!session || new Date(session.expires_at) < new Date()) {
@@ -145,14 +150,14 @@ router.post("/refresh", async (req, res) => {
     try {
       await connection.beginTransaction()
       await connection.execute("DELETE FROM sessions WHERE id = ?", [session.id])
-      const refresh = signRefreshToken(payload.sub)
+      const refresh = signRefreshToken(adminId)
       await connection.execute(
         "INSERT INTO sessions (admin_id, token_hash, expires_at) VALUES (?, ?, ?)",
-        [payload.sub, hashToken(refresh.token), refresh.expiresAt]
+        [adminId, hashToken(refresh.token), refresh.expiresAt]
       )
       await connection.commit()
 
-      const accessToken = signAccessToken({ sub: payload.sub, email: admin.email })
+      const accessToken = signAccessToken({ sub: adminId, email: admin.email })
       setRefreshCookie(res, refresh.token)
       res.json({ accessToken })
     } catch {
