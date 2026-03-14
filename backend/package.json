@@ -7,7 +7,10 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "db:setup": "echo \"Use sql/schema.sql and sql/seed.sql\""
+    "db:setup": "echo \"Use sql/schema.sql and sql/seed.sql\"",
+    "build:client": "npm install --prefix ../frontend && npm run build --prefix ../frontend",
+    "copy:client": "node scripts/copy-frontend-build.cjs",
+    "build:all": "npm run build:client && npm run build && npm run copy:client"
   },
   "keywords": [],
   "author": "",
