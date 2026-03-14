@@ -1,13 +1,13 @@
 INSERT INTO games (code, name, description, icon_path) VALUES
-('simon', 'Misión Simon', 'Reconocimiento de Patrones', '/games/simon.svg'),
-('puzzle', 'Misión Puzzle', 'Reconstrucción de Imagen', '/games/puzzle.svg'),
-('memory', 'Misión Memoria', 'Fortalecimiento Neural', '/games/memory.svg'),
-('math', 'Misión Cálculo', 'Velocidad Computacional', '/games/math.svg'),
+('simon', 'Mision Simon', 'Reconocimiento de Patrones', '/games/simon.svg'),
+('puzzle', 'Mision Puzzle', 'Reconstruccion de Imagen', '/games/puzzle.svg'),
+('memory', 'Mision Memoria', 'Fortalecimiento Neural', '/games/memory.svg'),
+('math', 'Mision Calculo', 'Velocidad Computacional', '/games/math.svg'),
 ('stroop', 'Stroop Express', 'Control Inhibitorio', '/games/stroop.svg'),
-('sequence', 'Secuencia Lógica', 'Patrones y series', '/games/sequence.svg'),
+('sequence', 'Secuencia Logica', 'Patrones y series', '/games/sequence.svg'),
 ('path', 'Camino Fantasma', 'Memoria visuoespacial', '/games/path.svg'),
-('search', 'Búsqueda Visual', 'Agilidad visual', '/games/search.svg'),
-('rotation', 'Rotación Rápida', 'Rotación mental', '/games/rotation.svg'),
-('compare', 'Comparación Relámpago', 'Decisión rápida', '/games/compare.svg'),
-('rule', 'Parejas con Regla', 'Atención y criterio', '/games/rule.svg'),
-('echo', 'Eco Numérico', 'Memoria de trabajo', '/games/echo.svg');
+('search', 'Busqueda Visual', 'Agilidad visual', '/games/search.svg'),
+('rotation', 'Rotacion Rapida', 'Rotacion mental', '/games/rotation.svg'),
+('compare', 'Comparacion Relampago', 'Decision rapida', '/games/compare.svg'),
+('rule', 'Parejas con Regla', 'Atencion y criterio', '/games/rule.svg'),
+('echo', 'Eco Numerico', 'Memoria de trabajo', '/games/echo.svg');
